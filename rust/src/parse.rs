@@ -5,31 +5,57 @@ named!(
         tag_s!(":")
 ));
 
-fn alpha_sym(chr: char) -> bool {
+fn is_alpha_sym(chr: char) -> bool {
     '.' == chr
         || (chr >= 'a' && chr <= 'z')
         || (chr >= 'A' && chr <= 'Z')
         || '+' == chr
         || '~' == chr
+}
+
+fn is_alpha_sym_hyphen(chr: char) -> bool {
+    is_alpha_sym(chr)
         || '-' == chr
 }
 
 named!(
-    version(&str) -> Vec<(&str, &str)>,
-    many1!(
-        // TODO: is it a problem that this can match empty?
-        pair!(
-            take_while_s!(|chr: char| alpha_sym(chr)),
-            take_while_s!(|chr: char| chr.is_digit(10))
-        )
+    alpha_sym(&str) -> &str,
+    take_while1_s!(|chr: char| is_alpha_sym(chr))
+);
+
+named!(
+    alpha_sym_hyphen(&str) -> &str,
+    take_while1_s!(|chr: char| is_alpha_sym_hyphen(chr))
+);
+
+named!(
+    digits(&str) -> &str,
+    take_while1_s!(|chr: char| chr.is_digit(10))
+);
+
+named!(
+    version(&str) -> (
+        Option<&str>,
+        Vec<(&str, &str)>,
+        Option<&str>
+    ),
+    tuple!(
+        opt!(digits),
+        many0!(
+            pair!(
+                alpha_sym,
+                digits
+            )
+        ),
+        opt!(alpha_sym)
     )
 );
 
 named!(
     deb_version(&str) -> (
         Option<&str>,
-        Vec<(&str, &str)>,
-        Option<Vec<(&str, &str)> >
+        (Option<&str>, Vec<(&str, &str)>, Option<&str>),
+        Option<(Option<&str>, Vec<(&str, &str)>, Option<&str>)>
     ),
     tuple!(
         opt!(epoch),
@@ -45,8 +71,8 @@ named!(
 
 named!(de(&str)  -> (
         Option<&str>,
-        Vec<(&str, &str)>,
-        Option<Vec<(&str, &str)> >
+        (Option<&str>, Vec<(&str, &str)>, Option<&str>),
+        Option<(Option<&str>, Vec<(&str, &str)>, Option<&str>)>
     ), dbg!(deb_version));
 
 #[cfg(test)]
