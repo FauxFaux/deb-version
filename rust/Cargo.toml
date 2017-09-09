@@ -1,0 +1,11 @@
+[package]
+name = "deb-version"
+version = "0.1.0"
+authors = ["Chris West (Faux) <git@goeswhere.com>"]
+
+[dependencies]
+nom = "3.2.0"
+
+[dev-dependencies]
+apt-pkg-native = "0.2.0"
+quickcheck = "0.4.1"
