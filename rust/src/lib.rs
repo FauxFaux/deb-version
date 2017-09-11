@@ -1,7 +1,3 @@
-//#[macro_use]
-//extern crate nom;
-//mod parse;
-
 use std::cmp::Ordering;
 
 fn epoch(version: &str) -> (&str, &str) {
