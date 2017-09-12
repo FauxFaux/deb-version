@@ -9,4 +9,5 @@ authors = ["Chris West (Faux) <git@goeswhere.com>"]
 apt-pkg-native = "0.2.0"
 lazy_static = "0.2.8"
 quickcheck = "0.4.1"
+rand = "0.3.16"
 regex = "0.2.2"
