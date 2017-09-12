@@ -44,7 +44,7 @@ fn take_component(version: &str) -> ((&str, &str), &str) {
     ((alpha_part, num_part), version)
 }
 
-pub fn compare_digits(left: &str, right: &str) -> Ordering {
+fn compare_digits(left: &str, right: &str) -> Ordering {
     if left == right {
         return Ordering::Equal;
     }
@@ -58,11 +58,11 @@ pub fn compare_digits(left: &str, right: &str) -> Ordering {
     }
 }
 
-pub fn is_ascii_letter(chr: char) -> bool {
+fn is_ascii_letter(chr: char) -> bool {
     (chr >= 'a' && chr <= 'z') || (chr >= 'A' && chr <= 'Z')
 }
 
-pub fn compare_non_digit(left: char, right: char) -> Ordering {
+fn compare_non_digit(left: char, right: char) -> Ordering {
     if left == right {
         return Ordering::Equal;
     }
@@ -89,7 +89,7 @@ pub fn compare_non_digit(left: char, right: char) -> Ordering {
     return Ordering::Greater;
 }
 
-pub fn compare_non_digits(left: &str, right: &str) -> Ordering {
+fn compare_non_digits(left: &str, right: &str) -> Ordering {
     if left == right {
         return Ordering::Equal;
     }
@@ -126,7 +126,7 @@ pub fn compare_non_digits(left: &str, right: &str) -> Ordering {
     }
 }
 
-pub fn compare_simple_version(mut left: &str, mut right: &str) -> Ordering {
+fn compare_simple_version(mut left: &str, mut right: &str) -> Ordering {
     if left == right {
         return Ordering::Equal;
     }
@@ -155,6 +155,16 @@ pub fn compare_simple_version(mut left: &str, mut right: &str) -> Ordering {
     }
 }
 
+/// Compare two version numbers.
+///
+/// # Example
+/// ```rust
+/// extern crate deb_version;
+/// assert_eq!(
+///     std::cmp::Ordering::Less,
+///     deb_version::compare_versions("1.0", "2.0")
+/// );
+/// ```
 pub fn compare_versions(left: &str, right: &str) -> Ordering {
     if left == right {
         return Ordering::Equal;

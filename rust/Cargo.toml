@@ -3,6 +3,12 @@ name = "deb-version"
 version = "0.1.0"
 authors = ["Chris West (Faux) <git@goeswhere.com>"]
 
+description = "Compare (Debian-style) version numbers"
+repository = "https://github.com/FauxFaux/deb-version"
+readme = "../README.md"
+categories = ["os", "parsing"]
+license = "MIT"
+
 [dependencies]
 
 [dev-dependencies]
