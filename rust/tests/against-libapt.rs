@@ -90,7 +90,7 @@ fn sort_everything() {
     use rand::thread_rng;
     use rand::Rng;
 
-    let everything = include_str!("../../all-debian-versions.lst");
+    let everything = include_str!("../../all-debian-versions.lst").trim();
     let mut everything: Vec<&str> = everything.split('\n').collect();
     thread_rng().shuffle(&mut everything);
     assert!(everything.len() > 30_000);
@@ -104,5 +104,11 @@ fn sort_everything() {
     let mut us: Vec<&str> = everything.clone();
     us.sort_by(|left, right| compare_versions(left, right));
 
-    assert_eq!(apt, us);
+    assert_eq!(apt.len(), us.len());
+
+    for (line, (apt, us)) in apt.iter().zip(us.iter()).enumerate() {
+        if apt != us {
+            panic!("varied at line {}: {} {}", line, apt, us);
+        }
+    }
 }
