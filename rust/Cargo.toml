@@ -12,8 +12,8 @@ license = "MIT"
 [dependencies]
 
 [dev-dependencies]
-apt-pkg-native = "0.2.0"
-lazy_static = "0.2.8"
-quickcheck = "0.4.1"
-rand = "0.3.16"
-regex = "0.2.2"
+apt-pkg-native = "0.3"
+lazy_static = "1"
+quickcheck = "0.6"
+rand = "0.4"
+regex = "0.2"

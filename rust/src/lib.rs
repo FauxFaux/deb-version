@@ -36,7 +36,6 @@ where
     (&from[..point], &from[point..])
 }
 
-
 fn take_component(version: &str) -> ((&str, &str), &str) {
     let (alpha_part, version) = take_while(version, |chr: char| !chr.is_digit(10));
     let (num_part, version) = take_while(version, |chr: char| chr.is_digit(10));
@@ -140,7 +139,6 @@ fn compare_simple_version(mut left: &str, mut right: &str) -> Ordering {
             other => return other,
         }
 
-
         match compare_digits(left_digit, right_digit) {
             Ordering::Equal => {}
             other => return other,
@@ -187,12 +185,12 @@ pub fn compare_versions(left: &str, right: &str) -> Ordering {
     }
 
     compare_simple_version(left_debian, right_debian)
-
 }
 
 #[cfg(test)]
 mod tests {
     use std::cmp::Ordering;
+
     use compare_versions;
 
     #[test]
@@ -239,8 +237,8 @@ mod tests {
 
     #[test]
     fn test_compare_digits() {
-        use std::cmp::Ordering::*;
         use compare_digits;
+        use std::cmp::Ordering::*;
 
         assert_eq!(Equal, compare_digits("1", "1"));
         assert_eq!(Equal, compare_digits("1", "01"));
@@ -271,8 +269,8 @@ mod tests {
 
     #[test]
     fn test_compare_non_digits() {
-        use std::cmp::Ordering::*;
         use compare_non_digits;
+        use std::cmp::Ordering::*;
 
         assert_eq!(Equal, compare_non_digits("a", "a"));
         assert_eq!(Equal, compare_non_digits("Z", "Z"));

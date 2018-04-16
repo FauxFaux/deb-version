@@ -31,8 +31,9 @@ struct VersionString {
 impl VersionString {
     fn valid(&self) -> bool {
         !self.version.is_empty()
-        && self.version.find(|x: char| !VALID_CHARS.contains(x)).is_none()
-        && BASIC_VALIDATE.is_match(self.version.as_ref())
+            && self.version
+                .find(|x: char| !VALID_CHARS.contains(x))
+                .is_none() && BASIC_VALIDATE.is_match(self.version.as_ref())
     }
 }
 
@@ -64,8 +65,8 @@ impl quickcheck::Arbitrary for VersionString {
 
     fn shrink(&self) -> Box<Iterator<Item = Self>> {
         let chars: Vec<char> = self.version.chars().collect();
-        Box::new(chars.shrink().map(|x| {
-            VersionString { version: x.into_iter().collect::<String>() }
+        Box::new(chars.shrink().map(|x| VersionString {
+            version: x.into_iter().collect::<String>(),
         }))
     }
 }
@@ -86,8 +87,8 @@ quickcheck! {
 
 #[test]
 fn sort_everything() {
-    use rand::Rng;
     use rand::thread_rng;
+    use rand::Rng;
 
     let everything = include_str!("../../all-debian-versions.lst");
     let mut everything: Vec<&str> = everything.split('\n').collect();
