@@ -78,14 +78,12 @@ fn compare_non_digit(left: char, right: char) -> Ordering {
     let right_letter = is_ascii_letter(right);
 
     if left_letter == right_letter {
-        return left.cmp(&right);
+        left.cmp(&right)
+    } else if left_letter {
+        Ordering::Less
+    } else {
+        Ordering::Greater
     }
-
-    if left_letter {
-        return Ordering::Less;
-    }
-
-    return Ordering::Greater;
 }
 
 fn compare_non_digits(left: &str, right: &str) -> Ordering {
