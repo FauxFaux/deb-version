@@ -10,6 +10,8 @@ extern crate regex;
 use std::cmp::Ordering;
 
 use deb_version::compare_versions;
+use rand::prelude::SliceRandom;
+use rand::Rng;
 use regex::Regex;
 
 lazy_static! {
@@ -31,9 +33,11 @@ struct VersionString {
 impl VersionString {
     fn valid(&self) -> bool {
         !self.version.is_empty()
-            && self.version
+            && self
+                .version
                 .find(|x: char| !VALID_CHARS.contains(x))
-                .is_none() && BASIC_VALIDATE.is_match(self.version.as_ref())
+                .is_none()
+            && BASIC_VALIDATE.is_match(self.version.as_ref())
     }
 }
 
@@ -52,7 +56,7 @@ impl quickcheck::Arbitrary for VersionString {
             let made = {
                 let mut version = String::with_capacity(size);
                 for _ in 0..size {
-                    version.push(*g.choose(VALID_CHARS.as_bytes()).unwrap() as char);
+                    version.push(*VALID_CHARS.as_bytes().choose(g).unwrap() as char);
                 }
 
                 VersionString { version }
@@ -87,12 +91,9 @@ quickcheck! {
 
 #[test]
 fn sort_everything() {
-    use rand::thread_rng;
-    use rand::Rng;
-
     let everything = include_str!("../../all-debian-versions.lst").trim();
     let mut everything: Vec<&str> = everything.split('\n').collect();
-    thread_rng().shuffle(&mut everything);
+    everything.shuffle(&mut rand::thread_rng());
     assert!(everything.len() > 30_000);
 
     // shuffle then sort_by(_stable) as 1.00.00 == 1.0.0, which breaks this test
