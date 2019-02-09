@@ -189,11 +189,11 @@ pub fn compare_versions(left: &str, right: &str) -> Ordering {
 mod tests {
     use std::cmp::Ordering;
 
-    use compare_versions;
+    use crate::compare_versions;
 
     #[test]
     fn test_epoch() {
-        use epoch;
+        use crate::epoch;
 
         assert_eq!(("", "17"), epoch("17"));
         assert_eq!(("1", "17"), epoch("1:17"));
@@ -204,7 +204,7 @@ mod tests {
 
     #[test]
     fn test_extract_revision() {
-        use debian_revision;
+        use crate::debian_revision;
 
         assert_eq!(("17", ""), debian_revision("17"));
         assert_eq!(("17", "2"), debian_revision("17-2"));
@@ -213,7 +213,7 @@ mod tests {
 
     #[test]
     fn test_take_component() {
-        use take_component;
+        use crate::take_component;
 
         assert_eq!((("abc", "123"), "def456"), take_component("abc123def456"));
         assert_eq!((("a", "123"), "def456"), take_component("a123def456"));
@@ -235,7 +235,7 @@ mod tests {
 
     #[test]
     fn test_compare_digits() {
-        use compare_digits;
+        use crate::compare_digits;
         use std::cmp::Ordering::*;
 
         assert_eq!(Equal, compare_digits("1", "1"));
@@ -267,7 +267,7 @@ mod tests {
 
     #[test]
     fn test_compare_non_digits() {
-        use compare_non_digits;
+        use crate::compare_non_digits;
         use std::cmp::Ordering::*;
 
         assert_eq!(Equal, compare_non_digits("a", "a"));

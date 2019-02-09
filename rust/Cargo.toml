@@ -7,7 +7,9 @@ description = "Compare (Debian-style) version numbers"
 repository = "https://github.com/FauxFaux/deb-version"
 readme = "../README.md"
 categories = ["os", "parsing"]
-license = "MIT"
+license = "MIT OR Apache-2.0"
+
+edition = "2018"
 
 [dependencies]
 
