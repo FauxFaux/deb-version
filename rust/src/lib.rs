@@ -48,8 +48,8 @@ fn compare_digits(left: &str, right: &str) -> Ordering {
         return Ordering::Equal;
     }
 
-    let left = left.trim_left_matches('0');
-    let right = right.trim_left_matches('0');
+    let left = left.trim_start_matches('0');
+    let right = right.trim_start_matches('0');
 
     match left.len().cmp(&right.len()) {
         Ordering::Equal => left.cmp(&right),
